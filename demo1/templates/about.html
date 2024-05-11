@@ -73,22 +73,28 @@
     <p>Welcome to our food paradise, where flavors come to life!</p>
 
     <div class="image-gallery">
+        <a href="{{url_for('recipe_search')}}">
         <div class="image-item" onmouseover="zoomIn(this)" onmouseout="zoomOut(this)">
             <img src="{{ url_for('static', filename='recipesearch.jpg') }}" alt="Image 1">
         </div>
+        </a>
+        <a href="{{url_for('add_recipes')}}">
         <div class="image-item" onmouseover="zoomIn(this)" onmouseout="zoomOut(this)">
             <img src="{{ url_for('static', filename='addyourrecipe.jpg') }}" alt="Image 2">
         </div>
+        </a>
+        <a href="{{url_for('to_do_list_recipe')}}">
         <div class="image-item" onmouseover="zoomIn(this)" onmouseout="zoomOut(this)">
             <img src="{{ url_for('static', filename='to do list.jpg') }}" alt="Image 3">
         </div>
+        </a>
     </div>
    <div>
-    <h3>Our journey began with a passion for creating delightful recipes and sharing them with the world. We believe in the art of cooking and the joy it brings to people's lives.</h3>
+    <h3 style="color: #ffaa00ea;">Our journey began with a passion for creating delightful recipes and sharing them with the world. We believe in the art of cooking and the joy it brings to people's lives.</h3>
 
-    <h3>Explore our collection of recipes, create your to-do list, and add your own culinary masterpieces to the mix. Download your favorite recipes and embark on a culinary adventure with us!</h3>
+    <h3 style="color: #a393ffea;">Explore our collection of recipes, create your to-do list, and add your own culinary masterpieces to the mix. Download your favorite recipes and embark on a culinary adventure with us!</h3>
 
-    <h3>Thank you for being a part of our food community. Happy cooking!</h3>
+    <h3 style="color: rgb(255, 163, 165);">Thank you for being a part of our food community. Happy cooking!</h3>
    </div>
     
 </div>
