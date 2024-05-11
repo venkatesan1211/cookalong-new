@@ -6,6 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from urllib.parse import quote_plus
 from flask import jsonify
 from sqlalchemy import text 
+from functools import wraps
+
 
 UPLOAD_FOLDER = 'static/images/recipeimages'
 
@@ -47,6 +49,15 @@ class Recipe(db.Model):
     recipe_details = db.Column(db.Text, nullable=False)
 
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in session:
+            # If the user is not logged in, redirect to the login page
+            flash('Please log in to access this page.', 'error')
+            return redirect(url_for('index'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 @app.route('/')
@@ -104,15 +115,15 @@ def login():
     return redirect(url_for('index'))
     
 
-@app.route('/dashboard1')        
+@app.route('/dashboard1')
+@login_required
 def dashboard1():
     username = session.get('username', 'Guest')
-
-    # Pass the username to the dashboard template
     return render_template('dashboard1.html', username=username)
 
 
 @app.route('/recipe_search', methods=['GET', 'POST'])
+@login_required
 def recipe_search():
     # Get user inputs from the form
     recipe_type = request.args.get('type')
@@ -158,6 +169,7 @@ def bad_request(e):
     return jsonify({'error': 'Bad request'}), 400
 
 @app.route('/recipe/<int:recipe_number>')
+@login_required
 def view_recipe_details(recipe_number):
     # Query the database to get details of the selected recipe
     recipe = Recipe.query.filter_by(recipe_number=recipe_number).first()
@@ -195,6 +207,7 @@ success_message = """
 """
 
 @app.route('/add_recipes', methods=['GET', 'POST'])
+@login_required
 def add_recipes():
     if request.method == 'POST':
         # Handle POST request to add recipes
@@ -249,18 +262,23 @@ def add_recipes():
 
 
 @app.route('/to_do_list_recipe')
+@login_required
 def to_do_list_recipe():
     # Add logic for to-do list recipe
     return render_template('To_do_list_recipe.html')  # Create to_do_list_recipe.html template
 
 @app.route('/about')
+@login_required
 def about():
     # Add logic for the about section
     return render_template('about.html')  # Create about.html template
 
 @app.route('/logout')
 def logout():
-    # Add logic for logout
+    # Clear the session
+    session.clear()
+    flash('You have been logged out.', 'success')
+    # Redirect to the login page
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
