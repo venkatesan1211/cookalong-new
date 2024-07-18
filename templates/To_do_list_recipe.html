@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom styling -->
+    <style>
+        @media only screen and (max-width: 600px) {
+    body {
+        background-image: url('static/wepikdashboard.jpeg');
+            background-size: contain;
+            background-attachment: fixed;
+           
+            height: 100vh;
+            margin: 0;
+            overflow-y: auto;     }
+}
+        /* Media query for medium devices (e.g., tablets) */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    body {
+        background-image: url('static/wepikdashboard.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            margin: 0;
+            overflow-y: auto;     }
+}
+
+/* Media query for large devices (e.g., desktops) */
+@media only screen and (min-width: 1025px) {
+    body {
+        background-image: url('static/wepikdashboard.jpeg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            overflow-y: auto;     }
+}
+
+
+        .todo-container {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .todo-item {
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center h-100">
+            <div class="col-md-6 my-auto">
+                <div class="todo-container">
+                    <h1 class="text-center mb-4">Todo Your Recipe</h1>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="addTodoInput" placeholder="Enter todo instruction">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-warning btn-block" id="makeTodoBtn">Make Todo</button>
+                    </div>
+                    <div id="todoListContainer" class="overflow-auto" style="max-height: 300px;">
+                        <div class="text-white" id="todoList"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById('makeTodoBtn').addEventListener('click', function () {
+            var todoInstruction = document.getElementById('addTodoInput').value;
+            if (todoInstruction.trim() !== '') {
+                makeTodoItem(todoInstruction);
+                document.getElementById('addTodoInput').value = '';
+            }
+        });
+
+        function makeTodoItem(instruction) {
+            var todoListContainer = document.getElementById('todoList');
+            var div = document.createElement('div');
+            div.className = 'todo-item';
+
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'todoCheckbox';
+
+            var label = document.createElement('label');
+            label.appendChild(document.createTextNode(instruction));
+
+            div.appendChild(checkbox);
+            div.appendChild(label);
+            todoListContainer.appendChild(div);
+
+            // Add event listener to handle checkbox state changes
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    label.classList.add('completed');
+                } else {
+                    label.classList.remove('completed');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
