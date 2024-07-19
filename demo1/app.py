@@ -17,11 +17,11 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
 # Encode the special characters in the password
-password = 'Venkat@1211'
+password = '9iie24bxFn'
 encoded_password = quote_plus(password)
 
 # Configure SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://root:{encoded_password}@localhost/savorysync'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://sql8720933:{encoded_password}@sql8.freemysqlhosting.net/sql8720933'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
